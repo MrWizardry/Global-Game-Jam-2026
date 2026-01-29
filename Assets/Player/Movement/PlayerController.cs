@@ -1,10 +1,24 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
+    [Header("Movement Settings")]
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float rotationSpeed = 12f;
+    private CharacterController controller;
+    private float verticalVelocity;
     private Vector2 move;
+
+    [Header("Gravity")]
+    [SerializeField] private float gravity = -20f;
+
+    private void Awake()
+    {
+        controller = GetComponent<CharacterController>();
+    }
 
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -18,10 +32,23 @@ public class PlayerController : MonoBehaviour
 
     public void movePlayer()
     {
-        Vector3 movement = new Vector3(move.x, 0f, move.y);
+        float dt = Time.deltaTime;
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15f);
+        float turn = move.x;
+        transform.Rotate(0f, turn * rotationSpeed * dt, 0f);
 
-        transform.Translate(movement * speed * Time.deltaTime, Space.World);
+        float forward = move.y;
+        Vector3 moveDirection = transform.forward * (forward * speed);
+
+        if(controller.isGrounded && verticalVelocity < 0)
+        {
+            verticalVelocity = -2f; // Small negative value to keep grounded
+        }
+
+        verticalVelocity += gravity * dt;
+        moveDirection.y = verticalVelocity;
+
+        controller.Move(moveDirection * dt);
+        
     }
 }
