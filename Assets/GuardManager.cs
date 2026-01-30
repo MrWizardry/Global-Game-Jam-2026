@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum AlertStage
 {
@@ -6,39 +8,55 @@ public enum AlertStage
     Investigando,
     Alerta
 }
+
 public class GuardManager : MonoBehaviour
 {
+    
     public float fov;
     [Range(0, 360)] public float fovAngle;
 
+    
     public AlertStage alertStage;
-    [Range(0, 400)] public float alertLevel;
+    [Range(0, 200)] public float alertLevel;
 
+    
     public GameObject inimigo;
+    public float tempoAtivoInimigo = 10;
+    private Vector3 inimigoPosicaoInicial;
+    private Coroutine inimigoCoroutine;
 
     private void Awake()
     {
         alertStage = AlertStage.Curioso;
         alertLevel = 0;
-        inimigo.SetActive(false);  
+
+        inimigoPosicaoInicial = inimigo.transform.position;
+        inimigo.SetActive(false);
     }
 
     private void Update()
     {
         bool playerInFOV = false;
-        Collider[] targertsInFOV = Physics.OverlapSphere(transform.position, fov);
-        foreach(Collider collider in targertsInFOV)
+
+        Collider[] targetsInFOV = Physics.OverlapSphere(transform.position, fov);
+
+        foreach (Collider collider in targetsInFOV)
         {
             if (collider.CompareTag("Player"))
             {
-                float signedAngle = Vector3.Angle(
+                float angle = Vector3.Angle(
                     transform.forward,
-                    collider.transform.position - transform.position);
-                if (Mathf.Abs(signedAngle) < fovAngle / 2)
-                playerInFOV = true;
-                break;
+                    collider.transform.position - transform.position
+                );
+
+                if (angle < fovAngle / 2f)
+                {
+                    playerInFOV = true;
+                    break;
+                }
             }
         }
+
         UpdateAlertState(playerInFOV);
     }
 
@@ -47,28 +65,62 @@ public class GuardManager : MonoBehaviour
         switch (alertStage)
         {
             case AlertStage.Curioso:
-                if (playerInFOV) 
+                if (playerInFOV)
                     alertStage = AlertStage.Investigando;
                 break;
+
             case AlertStage.Investigando:
                 if (playerInFOV)
                 {
-                    alertLevel++;
-                    if (alertLevel >= 400)
+                    alertLevel += Time.deltaTime * 60f;
+
+                    if (alertLevel >= 200)
                         alertStage = AlertStage.Alerta;
                 }
                 else
                 {
-                    alertLevel--;
-                    if(alertLevel <= 0)
+                    alertLevel -= Time.deltaTime * 60f;
+
+                    if (alertLevel <= 0)
+                    {
+                        alertLevel = 0;
                         alertStage = AlertStage.Curioso;
+                    }
                 }
                 break;
+
             case AlertStage.Alerta:
-                inimigo.SetActive(true);
-                if (!playerInFOV)
-                    alertStage = AlertStage.Investigando;
+                if (inimigoCoroutine == null)
+                    inimigoCoroutine = StartCoroutine(AtivarInimigoPorTempo());
                 break;
         }
+    }
+
+    private IEnumerator AtivarInimigoPorTempo()
+    {
+        inimigo.SetActive(true);
+
+        NavMeshAgent agent = inimigo.GetComponent<NavMeshAgent>();
+        if (agent != null)
+            agent.ResetPath();
+
+        yield return new WaitForSeconds(tempoAtivoInimigo);
+
+        if (agent != null)
+        {
+            agent.ResetPath();
+            agent.Warp(inimigoPosicaoInicial);
+        }
+        else
+        {
+            inimigo.transform.position = inimigoPosicaoInicial;
+        }
+
+        inimigo.SetActive(false);
+
+        alertLevel = 0;
+        alertStage = AlertStage.Curioso;
+
+        inimigoCoroutine = null;
     }
 }

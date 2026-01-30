@@ -10,7 +10,7 @@ public class GuardManagerEditor : Editor
 
         Color c = Color.yellow;
         if (guard.alertStage == AlertStage.Investigando)
-            c = Color.Lerp(Color.yellow, Color.red, guard.alertLevel / 400f); // Alterar cor e tempo de detecção visualmente
+            c = Color.Lerp(Color.yellow, Color.red, guard.alertLevel / 200f); // Alterar cor e tempo de detecção visualmente
         else if (guard.alertStage == AlertStage.Alerta)
             c = Color.red;
 
