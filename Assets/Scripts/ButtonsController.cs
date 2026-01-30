@@ -7,9 +7,9 @@ public class ButtonsController : MonoBehaviour
     //[SerializeField] private GameObject optionsMenu;
 
 #if UNITY_STANDALONE || UNITY_EDITOR
-    public void OnStartButtonPressed()
+    public void OnStartButtonPressed(string sceneName)
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene(sceneName);
     }
 
     public void OnOptionsButtonPressed()
