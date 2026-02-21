@@ -90,15 +90,23 @@ public class GuardManager : MonoBehaviour
                 break;
 
             case AlertStage.Alerta:
-                if (inimigoCoroutine == null)
-                    inimigoCoroutine = StartCoroutine(AtivarInimigoPorTempo());
+                inimigo.SetActive(true);
+                if (!playerInFOV) 
+                {
+                    if(inimigoCoroutine == null)
+                    {
+                        inimigoCoroutine = StartCoroutine(AtivarInimigoPorTempo());
+                    }
+                           
+                }
+                    
                 break;
         }
     }
 
     private IEnumerator AtivarInimigoPorTempo()
     {
-        inimigo.SetActive(true);
+        
 
         NavMeshAgent agent = inimigo.GetComponent<NavMeshAgent>();
         if (agent != null)
