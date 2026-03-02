@@ -11,19 +11,17 @@ public enum AlertStage
 
 public class GuardManager : MonoBehaviour
 {
-    
     public float fov;
     [Range(0, 360)] public float fovAngle;
 
-    
     public AlertStage alertStage;
     [Range(0, 200)] public float alertLevel;
 
-    
     public GameObject inimigo;
-    public float tempoAtivoInimigo = 10;
+    public float tempoAtivoInimigo = 10f;
+
     private Vector3 inimigoPosicaoInicial;
-    private Coroutine inimigoCoroutine;
+    public float tempoForaDoFOV = 0f;
 
     private void Awake()
     {
@@ -90,29 +88,32 @@ public class GuardManager : MonoBehaviour
                 break;
 
             case AlertStage.Alerta:
+
                 inimigo.SetActive(true);
-                if (!playerInFOV) 
+
+                if (playerInFOV)
                 {
-                    if(inimigoCoroutine == null)
-                    {
-                        inimigoCoroutine = StartCoroutine(AtivarInimigoPorTempo());
-                    }
-                           
+                   
+                    tempoForaDoFOV = 0f;
                 }
+                else
+                {
                     
+                    tempoForaDoFOV += Time.deltaTime;
+
+                    if (tempoForaDoFOV >= tempoAtivoInimigo)
+                    {
+                        DesativarInimigo();
+                    }
+                }
+
                 break;
         }
     }
 
-    private IEnumerator AtivarInimigoPorTempo()
+    private void DesativarInimigo()
     {
-        
-
         NavMeshAgent agent = inimigo.GetComponent<NavMeshAgent>();
-        if (agent != null)
-            agent.ResetPath();
-
-        yield return new WaitForSeconds(tempoAtivoInimigo);
 
         if (agent != null)
         {
@@ -127,8 +128,7 @@ public class GuardManager : MonoBehaviour
         inimigo.SetActive(false);
 
         alertLevel = 0;
+        tempoForaDoFOV = 0f;
         alertStage = AlertStage.Curioso;
-
-        inimigoCoroutine = null;
     }
 }
