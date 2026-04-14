@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 3
   tags:
   - Door
+  - NPC1
+  - NPC2
+  - NPC3
+  - NPC4
+  - Cozinheiro
   layers:
   - Default
   - TransparentFX
