@@ -10,12 +10,13 @@ TagManager:
   - NPC3
   - NPC4
   - Cozinheiro
-  - NPC
+  - Mulher
+  - "Alian\xE7a"
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - NPC
+  - 
   - Water
   - UI
   - 

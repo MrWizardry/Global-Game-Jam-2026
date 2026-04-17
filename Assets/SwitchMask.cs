@@ -6,39 +6,43 @@ public class SwitchMask : MonoBehaviour
     public GameObject mascaraDeConvidado;
     public GameObject mascaraDeFuncionario;
     public GameObject mascaraDeGerente;
-    public bool missaoPaiConcluida;
-    public bool missaoMulherConcluida;
-    public bool missaoHomemConcluida;
+    //public bool missaoPaiConcluida;
+    MissaooMulher missaooMulher;
+    CozinheiroMissao cozinheiroMissao;
+    
 
     private void Start()
     {
-        mascaraDeConvidado.SetActive(false);
+
+        missaooMulher = GetComponent<MissaooMulher>();
+        cozinheiroMissao = GetComponent<CozinheiroMissao>();
+
+        mascaraDeConvidado.SetActive(true);
         mascaraDeFuncionario.SetActive(false);
         mascaraDeGerente.SetActive(false);
-        missaoPaiConcluida = false;
-        missaoMulherConcluida = false;
-        missaoHomemConcluida = false;
+        //missaoPaiConcluida = false;
+        
     }
 
     private void Update()
     {
-        if (missaoHomemConcluida)
+        if (cozinheiroMissao.missaoCozinheiroCompleta)
         {
             AtivarMascara(mascaraDeGerente);
         }
-        else if (missaoMulherConcluida)
+        else if (missaooMulher.missaoMulherCompleta)
         {
             AtivarMascara(mascaraDeFuncionario);
         }
-        else if (missaoPaiConcluida)
-        {
-            AtivarMascara(mascaraDeConvidado);
-        }
+        //else if (missaoPaiConcluida)
+        //{
+            //AtivarMascara(mascaraDeConvidado);
+        //}
     }
 
     void AtivarMascara(GameObject mascara)
     {
-        mascaraDeConvidado.SetActive(false);
+        //mascaraDeConvidado.SetActive(false);
         mascaraDeFuncionario.SetActive(false);
         mascaraDeGerente.SetActive(false);
 
