@@ -10,11 +10,12 @@ TagManager:
   - NPC3
   - NPC4
   - Cozinheiro
+  - NPC
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - NPC
   - Water
   - UI
   - 
