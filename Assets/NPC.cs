@@ -1,45 +1,88 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI; 
+using UnityEngine.AI;
 
-
-public class NPC : MonoBehaviour 
+public class NPC : MonoBehaviour
 {
     public NavMeshAgent agent;
-    public float range; //radius of sphere
+    public float range;
+    public Transform centrePoint;
 
-    public Transform centrePoint; //centre of the area the agent wants to move around in
-    //instead of centrePoint you can set it as the transform of the agent if you don't care about a specific area
+    private float stuckTimer = 0f;
+    private float stuckThreshold = 2f; 
+    private Vector3 lastPosition;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-    }
 
+       
+        agent.avoidancePriority = Random.Range(10, 90);
+
+        lastPosition = transform.position;
+    }
 
     void Update()
     {
-        if (agent.remainingDistance <= agent.stoppingDistance) //done with path
+        DetectStuck();
+
+        if (agent.remainingDistance <= agent.stoppingDistance)
         {
             Vector3 point;
-            if (RandomPoint(centrePoint.position, range, out point)) //pass in our centre point and radius of area
+            if (RandomPoint(centrePoint.position, range, out point))
             {
-                Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f); //so you can see with gizmos
+                Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f);
                 agent.SetDestination(point);
             }
         }
-
     }
+
+    void DetectStuck()
+    {
+        float distanceMoved = Vector3.Distance(transform.position, lastPosition);
+
+        if (distanceMoved < 0.05f) 
+        {
+            stuckTimer += Time.deltaTime;
+        }
+        else
+        {
+            stuckTimer = 0f;
+        }
+
+        lastPosition = transform.position;
+
+        if (stuckTimer >= stuckThreshold)
+        {
+            StartCoroutine(RecoverFromStuck());
+            stuckTimer = 0f;
+        }
+    }
+
+    IEnumerator RecoverFromStuck()
+    {
+        agent.isStopped = true;
+
+        // NPC "colide" por alguns segundos
+        yield return new WaitForSeconds(2f);
+
+        agent.isStopped = false;
+
+        Vector3 point;
+        if (RandomPoint(centrePoint.position, range, out point))
+        {
+            agent.SetDestination(point);
+        }
+    }
+
     bool RandomPoint(Vector3 center, float range, out Vector3 result)
     {
-
-        Vector3 randomPoint = center + Random.insideUnitSphere * range; //random point in a sphere 
+        Vector3 randomPoint = center + Random.insideUnitSphere * range;
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas)) //documentation: https://docs.unity3d.com/ScriptReference/AI.NavMesh.SamplePosition.html
+
+        if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
         {
-            //the 1.0f is the max distance from the random point to a point on the navmesh, might want to increase if range is big
-            //or add a for loop like in the documentation
             result = hit.position;
             return true;
         }
@@ -47,6 +90,4 @@ public class NPC : MonoBehaviour
         result = Vector3.zero;
         return false;
     }
-
-
 }

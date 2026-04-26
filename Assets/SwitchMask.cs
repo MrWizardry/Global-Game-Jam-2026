@@ -9,7 +9,10 @@ public class SwitchMask : MonoBehaviour
     //public bool missaoPaiConcluida;
     MissaooMulher missaooMulher;
     CozinheiroMissao cozinheiroMissao;
-    
+    public GameObject portaZeladoria;
+    public GameObject portaCozinhaUm;
+    public GameObject portaCozinhaDois;
+
 
     private void Start()
     {
@@ -17,6 +20,9 @@ public class SwitchMask : MonoBehaviour
         missaooMulher = GetComponent<MissaooMulher>();
         cozinheiroMissao = GetComponent<CozinheiroMissao>();
 
+        portaZeladoria.SetActive(true);
+        portaCozinhaUm.SetActive(true);
+        portaCozinhaDois.SetActive(true);
         mascaraDeConvidado.SetActive(true);
         mascaraDeFuncionario.SetActive(false);
         mascaraDeGerente.SetActive(false);
@@ -33,6 +39,9 @@ public class SwitchMask : MonoBehaviour
         else if (missaooMulher.missaoMulherCompleta)
         {
             AtivarMascara(mascaraDeFuncionario);
+            portaZeladoria.SetActive(false);
+            portaCozinhaUm.SetActive(false);
+            portaCozinhaDois.SetActive(false);
         }
         //else if (missaoPaiConcluida)
         //{

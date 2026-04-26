@@ -8,6 +8,7 @@ public class MissaooMulher : MonoBehaviour
     public bool devolviAlianca;
     public bool missaoMulherCompleta;
     public GameObject alianca;
+    
 
 
     private void Start()
@@ -17,6 +18,7 @@ public class MissaooMulher : MonoBehaviour
         encontreiAlianca = false;   
         devolviAlianca = false;
         alianca.SetActive(false);
+       
     }
 
     void OnTriggerStay(Collider other)
@@ -60,5 +62,6 @@ public class MissaooMulher : MonoBehaviour
                 }
             }
         }
+        
     }
 }
