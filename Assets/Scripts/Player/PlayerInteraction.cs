@@ -1,10 +1,13 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PlayerInteraction : MonoBehaviour
 {
     private NPCInteraction currentNPC;
 
-    // chamado automaticamente pelo Input System
+    [Header("Tags válidas para interação")]
+    public List<string> npcTags;
+
     public void OnInteract()
     {
         if (DialogueManager.Instance.IsTalking())
@@ -21,7 +24,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("NPC"))
+        if (IsValidTag(other.tag))
         {
             currentNPC = other.GetComponent<NPCInteraction>();
         }
@@ -29,9 +32,14 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("NPC"))
+        if (IsValidTag(other.tag))
         {
             currentNPC = null;
         }
+    }
+
+    private bool IsValidTag(string tag)
+    {
+        return npcTags.Contains(tag);
     }
 }

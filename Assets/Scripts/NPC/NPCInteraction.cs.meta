@@ -1,2 +1,16 @@
 fileFormatVersion: 2
 guid: 0253d883f378e424dbde4f0164e8893c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - dialogoPrimeiraVez: {fileID: 11400000, guid: 106630f5a13fd6843af5d08345920bb9, type: 2}
+  - dialogoDuranteMissao: {instanceID: 0}
+  - dialogoAposCompletar: {instanceID: 0}
+  - missaoMulher: {instanceID: 0}
+  - missaoCozinheiro: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

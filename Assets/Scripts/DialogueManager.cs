@@ -33,6 +33,10 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(NPCInteraction npc)
     {
+        if (isTalking) return;
+
+        playerInput.SwitchCurrentActionMap("Player");
+
         isTalking = true;
 
         dialogueUI.SetActive(true);
@@ -40,7 +44,7 @@ public class DialogueManager : MonoBehaviour
         // troca pro mapa de UI
         playerInput.SwitchCurrentActionMap("UI");
 
-        currentLines = npc.dialogueData.lines;
+        currentLines = npc.GetDialogue().lines;
         currentIndex = 0;
 
         ShowLine();
@@ -81,8 +85,7 @@ public class DialogueManager : MonoBehaviour
 
         dialogueUI.SetActive(false);
 
-        // volta pro controle do player
-        playerInput.SwitchCurrentActionMap("Player");
+        playerInput.SwitchCurrentActionMap("Player"); // 👈 ESSENCIAL
 
         zoomController.ZoomOut();
     }

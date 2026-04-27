@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 131c0efb22e08394d8a3a6be29399e5b, type: 3}
+  m_Name: Playlist1
+  m_EditorClassIdentifier: Assembly-CSharp::PlayListData
+  tracks:
+  - name: "Aquela l\xE1"
+    clip: {fileID: 8300000, guid: b66d2bb55060eed40b90be37256ee8fa, type: 3}
+    volume: 1
+  - name: Mais Uma
+    clip: {fileID: 8300000, guid: 81080bf60083bbc4b95dabcc15457539, type: 3}
+    volume: 1
+  - name: Outra
+    clip: {fileID: 8300000, guid: 56ff533cbd2465c4b8942b991c6543ee, type: 3}
+    volume: 1
+  - name: Atacando Novamente
+    clip: {fileID: 8300000, guid: 25c976aea5803824abe0173dbbff0363, type: 3}
+    volume: 1
+  - name: The Last
+    clip: {fileID: 8300000, guid: 732b81080ff51a343b11c56740489c0f, type: 3}
+    volume: 1

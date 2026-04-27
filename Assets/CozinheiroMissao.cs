@@ -6,18 +6,19 @@ public class CozinheiroMissao : MonoBehaviour
 {
     public MissaooMulher missaooMulher;
     //Coleta
-    public bool peguei4Taças;
+    public bool peguei4Tacas;
     //Entrega
-    public bool entregueiTaça1;
-    public bool entregueiTaça2;
-    public bool entregueiTaça3;
-    public bool entregueiTaça4;
+    public bool entregueiTaca1;
+    public bool entregueiTaca2;
+    public bool entregueiTaca3;
+    public bool entregueiTaca4;
     public bool missaoCozinheiroCompleta;
     public bool missaoCozinheiroIniciada;
+    public UIReferenceToQuest uIReferenceToQuest;
 
     private void Start()
     {
-       peguei4Taças = false;
+       peguei4Tacas = false;
        missaoCozinheiroCompleta = false;
        missaoCozinheiroIniciada = false;
 
@@ -29,46 +30,48 @@ public class CozinheiroMissao : MonoBehaviour
         {
             if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame && missaooMulher.devolviAlianca == true)
             {
-                if (other.CompareTag("Cozinheiro") && !peguei4Taças)
+                if (other.CompareTag("Cozinheiro") && !peguei4Tacas)
                 {
                     missaoCozinheiroIniciada = true;
-                    peguei4Taças = true;
-                    Debug.Log("Pegou as taças! Entregue aos NPCs.");
+                    uIReferenceToQuest.ActivateCookMissionUI();
+                    peguei4Tacas = true;
+                    Debug.Log("Pegou as taÃ§as! Entregue aos NPCs.");
                     return;
                 }
 
-                if (peguei4Taças)
+                if (peguei4Tacas)
                 {
-                    if (other.CompareTag("NPC1") && !entregueiTaça1)
+                    if (other.CompareTag("NPC1") && !entregueiTaca1)
                     {
-                        entregueiTaça1 = true;
+                        entregueiTaca1 = true;
                         Debug.Log("Entregou para NPC 1");
                     }
-                    else if (other.CompareTag("NPC2") && !entregueiTaça2)
+                    else if (other.CompareTag("NPC2") && !entregueiTaca2)
                     {
-                        entregueiTaça2 = true;
+                        entregueiTaca2 = true;
                         Debug.Log("Entregou para NPC 2");
                     }
-                    else if (other.CompareTag("NPC3") && !entregueiTaça3)
+                    else if (other.CompareTag("NPC3") && !entregueiTaca3)
                     {
-                        entregueiTaça3 = true;
+                        entregueiTaca3 = true;
                         Debug.Log("Entregou para NPC 3");
                     }
-                    else if (other.CompareTag("NPC4") && !entregueiTaça4)
+                    else if (other.CompareTag("NPC4") && !entregueiTaca4)
                     {
-                        entregueiTaça4 = true;
+                        entregueiTaca4 = true;
                         Debug.Log("Entregou para NPC 4");
                     }
 
-                    if (entregueiTaça1 && entregueiTaça2 && entregueiTaça3 && entregueiTaça4)
+                    if (entregueiTaca1 && entregueiTaca2 && entregueiTaca3 && entregueiTaca4)
                     {
                         missaoCozinheiroCompleta = true;
-                        Debug.Log("MISSÃO COMPLETA");
+                        Debug.Log("MISSÃƒO COMPLETA");
+                        uIReferenceToQuest.DeactivateCookMissionUI();
                     }
                 }
                 else
                 {
-                    Debug.Log("Você ainda não pegou as taças");
+                    Debug.Log("VocÃª ainda no pegou as taÃ§as");
                 }
             }
         }
