@@ -15,16 +15,16 @@ MonoBehaviour:
   tracks:
   - name: "Aquela l\xE1"
     clip: {fileID: 8300000, guid: b66d2bb55060eed40b90be37256ee8fa, type: 3}
-    volume: 1
+    volume: 0.8
   - name: Mais Uma
     clip: {fileID: 8300000, guid: 81080bf60083bbc4b95dabcc15457539, type: 3}
-    volume: 1
+    volume: 0.8
   - name: Outra
     clip: {fileID: 8300000, guid: 56ff533cbd2465c4b8942b991c6543ee, type: 3}
-    volume: 1
+    volume: 0.8
   - name: Atacando Novamente
     clip: {fileID: 8300000, guid: 25c976aea5803824abe0173dbbff0363, type: 3}
-    volume: 1
+    volume: 0.8
   - name: The Last
     clip: {fileID: 8300000, guid: 732b81080ff51a343b11c56740489c0f, type: 3}
-    volume: 1
+    volume: 0.8
