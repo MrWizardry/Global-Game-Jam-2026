@@ -25,7 +25,7 @@ public class ButtonsController : MonoBehaviour
 #if UNITY_WEBGL
     public void OnStartButtonPressed()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("Modular_Scene");
     }
 
     public void OnOptionsButtonPressed()

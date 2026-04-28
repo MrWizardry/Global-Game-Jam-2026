@@ -13,7 +13,7 @@ public class Boss : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && cozinheiroMissao.missaoCozinheiroCompleta)
+        if (other.CompareTag("Player"))
         {
             boss.SetActive(true);
         }
