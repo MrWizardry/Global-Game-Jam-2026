@@ -23,8 +23,12 @@ public class GuardManager : MonoBehaviour
     private Vector3 inimigoPosicaoInicial;
     public float tempoForaDoFOV = 0f;
 
+    [SerializeField] private Transform lookAt;
+    private Vector3 idleLook;
+
     private void Awake()
     {
+        idleLook = lookAt.position;
         alertStage = AlertStage.Curioso;
         alertLevel = 0;
 
@@ -49,10 +53,12 @@ public class GuardManager : MonoBehaviour
 
                 if (angle < fovAngle / 2f)
                 {
+                    lookAt.position = collider.transform.position;
                     playerInFOV = true;
                     break;
                 }
             }
+            lookAt.position = idleLook;
         }
 
         UpdateAlertState(playerInFOV);
