@@ -23,6 +23,8 @@ public class GuardManager : MonoBehaviour
     private Vector3 inimigoPosicaoInicial;
     public float tempoForaDoFOV = 0f;
 
+    private EnemyLimiter limiter;
+
     private void Awake()
     {
         alertStage = AlertStage.Curioso;
@@ -30,6 +32,8 @@ public class GuardManager : MonoBehaviour
 
         inimigoPosicaoInicial = inimigo.transform.position;
         inimigo.SetActive(false);
+
+        limiter = FindAnyObjectByType<EnemyLimiter>();
     }
 
     private void Update()
@@ -63,14 +67,25 @@ public class GuardManager : MonoBehaviour
         switch (alertStage)
         {
             case AlertStage.Curioso:
+
                 if (playerInFOV)
                     alertStage = AlertStage.Investigando;
+
                 break;
 
             case AlertStage.Investigando:
+
+                
+                if (limiter != null && limiter.alertActive && alertStage != AlertStage.Alerta)
+                {
+                    alertLevel = 0;
+                    return;
+                }
+
                 if (playerInFOV)
                 {
                     alertLevel += Time.deltaTime * 60f;
+                    tempoForaDoFOV = 0f;
 
                     if (alertLevel >= 200)
                         alertStage = AlertStage.Alerta;
@@ -85,20 +100,24 @@ public class GuardManager : MonoBehaviour
                         alertStage = AlertStage.Curioso;
                     }
                 }
+
                 break;
 
             case AlertStage.Alerta:
 
-                inimigo.SetActive(true);
+                
+                if (!inimigo.activeInHierarchy && limiter != null && limiter.CanActivate())
+                {
+                    inimigo.SetActive(true);
+                    limiter.alertActive = true;
+                }
 
                 if (playerInFOV)
                 {
-                   
                     tempoForaDoFOV = 0f;
                 }
                 else
                 {
-                    
                     tempoForaDoFOV += Time.deltaTime;
 
                     if (tempoForaDoFOV >= tempoAtivoInimigo)
@@ -126,6 +145,9 @@ public class GuardManager : MonoBehaviour
         }
 
         inimigo.SetActive(false);
+
+        if (limiter != null)
+            limiter.alertActive = false;
 
         alertLevel = 0;
         tempoForaDoFOV = 0f;
