@@ -24217,6 +24217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteracaoLivro
   jogador: {fileID: 0}
   cameraAtiva: {fileID: 777027494}
+  playerInput: {fileID: 99167138}
   interacaoEstanteButton: {fileID: 1841502189}
   interacaoSairEstanteButton: {fileID: 383253678}
 --- !u!1 &2034785073
