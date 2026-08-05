@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Audio;
 
 public enum AlertStage
 {
@@ -23,6 +24,10 @@ public class GuardManager : MonoBehaviour
     private Vector3 inimigoPosicaoInicial;
     public float tempoForaDoFOV = 0f;
 
+    public AudioSource audioSource;
+    [Range(0f, 1f)] public float volumeMinimo = 0f;
+    [Range(0f, 1f)] public float volumeMaximo = 1f;
+
     private void Awake()
     {
         alertStage = AlertStage.Curioso;
@@ -30,6 +35,13 @@ public class GuardManager : MonoBehaviour
 
         inimigoPosicaoInicial = inimigo.transform.position;
         inimigo.SetActive(false);
+
+        if (audioSource != null)
+        {
+            audioSource.volume = volumeMinimo;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
     }
 
     private void Update()
@@ -56,6 +68,38 @@ public class GuardManager : MonoBehaviour
         }
 
         UpdateAlertState(playerInFOV);
+        AtualizarVolumeAudio();
+    }
+
+    private void AtualizarVolumeAudio()
+    {
+        if (audioSource == null) return;
+
+        float volumeAlvo;
+
+        switch (alertStage)
+        {
+            case AlertStage.Curioso:
+                volumeAlvo = volumeMinimo;
+                break;
+
+            case AlertStage.Investigando:
+                // Volume proporcional ao alertLevel (0 a 200)
+                float progresso = alertLevel / 200f;
+                volumeAlvo = Mathf.Lerp(volumeMinimo, volumeMaximo * 0.7f, progresso);
+                break;
+
+            case AlertStage.Alerta:
+                volumeAlvo = volumeMaximo;
+                break;
+
+            default:
+                volumeAlvo = volumeMinimo;
+                break;
+        }
+
+        // Transição suave de volume
+        audioSource.volume = Mathf.Lerp(audioSource.volume, volumeAlvo, Time.deltaTime * 5f);
     }
 
     private void UpdateAlertState(bool playerInFOV)
@@ -93,12 +137,10 @@ public class GuardManager : MonoBehaviour
 
                 if (playerInFOV)
                 {
-                   
                     tempoForaDoFOV = 0f;
                 }
                 else
                 {
-                    
                     tempoForaDoFOV += Time.deltaTime;
 
                     if (tempoForaDoFOV >= tempoAtivoInimigo)
