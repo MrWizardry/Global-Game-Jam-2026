@@ -12,6 +12,7 @@ public class SwitchMask : MonoBehaviour
     public GameObject portaZeladoria;
     public GameObject portaCozinhaUm;
     public GameObject portaCozinhaDois;
+    public GameObject EntradaElevador;
 
 
     private void Start()
@@ -23,11 +24,12 @@ public class SwitchMask : MonoBehaviour
         portaZeladoria.SetActive(true);
         portaCozinhaUm.SetActive(true);
         portaCozinhaDois.SetActive(true);
+        EntradaElevador.SetActive(true);
         mascaraDeConvidado.SetActive(true);
         mascaraDeFuncionario.SetActive(false);
         mascaraDeGerente.SetActive(false);
         //missaoPaiConcluida = false;
-        
+
     }
 
     private void Update()
@@ -35,6 +37,7 @@ public class SwitchMask : MonoBehaviour
         if (cozinheiroMissao.missaoCozinheiroCompleta)
         {
             AtivarMascara(mascaraDeGerente);
+            EntradaElevador.SetActive(false);
         }
         else if (missaooMulher.missaoMulherCompleta)
         {

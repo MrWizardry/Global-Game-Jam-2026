@@ -18,7 +18,7 @@ public class AgentTest : MonoBehaviour
         
         if (collision.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene("Death");
+            SceneManager.LoadScene("Menu");
             
         }
     }

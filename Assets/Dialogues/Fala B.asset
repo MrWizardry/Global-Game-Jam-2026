@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Fala B
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   lines:
-  - Pegou ?
+  - "Encontre minha alian\xE7a"

@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: Fala A
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   lines:
-  - Pega
-  - asdfbhasidbviabvbuoasbasdf
+  - "Intruso: Boa noite, sabe me dizer como eu posso ir para o pr\xF3ximo andar ?"
+  - "Convidada: Sei sim, mas s\xF3 vou dizer se me fizer um favor "
+  - "Convidada: Perdi minha alian\xE7a enquanto andava por aqui. Pode parecer bobo,
+    mas\u2026eu preciso dela.\r\n"
+  - 'Convidada: Se a encontrar, eu te ajudo'
