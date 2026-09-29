@@ -1,15 +1,24 @@
 using UnityEngine;
 
-public class ItemPickUp : MonoBehaviour
+public class ItemPickup : MonoBehaviour
 {
-    [SerializeField] private ItemType itemType;
+    public ItemData itemData;
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            InventorySystem.Instance.AddItem(itemType);
-            Destroy(gameObject);
+            Collect();
         }
+    }
+
+    public void Collect()
+    {
+        if (InventorySystem.Instance == null)
+            return;
+
+        InventorySystem.Instance.AddItem(itemData);
+
+        Destroy(gameObject);
     }
 }

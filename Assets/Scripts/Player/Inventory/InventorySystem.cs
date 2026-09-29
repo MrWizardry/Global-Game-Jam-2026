@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,7 +14,7 @@ public class InventorySystem : MonoBehaviour
 {
     public static InventorySystem Instance;
 
-    private HashSet<ItemType> items = new HashSet<ItemType>();
+    private List<InventoryItem> items = new List<InventoryItem>();
 
     public GameObject inventoryUI;
 
@@ -35,39 +34,49 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    public void AddItem(ItemType item)
+    public void AddItem(ItemData itemData)
     {
-        if(items.Add(item))
+        if (itemData == null)
         {
-            Debug.Log($"Item {item} added to inventory.");
-            if(InventoryUIManager.Instance != null)
-            {
-                InventoryUIManager.Instance.AddItem(item);
-            }
-        }
-        
-    }
-
-    public bool HasItem(ItemType item)
-    {
-        return items.Contains(item);
-    }
-
-    public void RemoveItem(ItemType item)
-    {
-        items.Remove(item);
-        Debug.Log($"Item {item} removed from inventory.");
-    }
-
-    public void LogInventory()
-    {
-        if (items.Count == 0)
-        {
-            Debug.Log("Inventário vazio.");
+            Debug.LogWarning("Tentou adicionar um item nulo ao inventário.");
             return;
         }
 
-        string itemList = string.Join(", ", items.Select(i => i.ToString()));
-        Debug.Log($"Itens no inventário: {itemList}");
+        InventoryItem newItem = new InventoryItem(itemData);
+
+        items.Add(newItem);
+
+        Debug.Log($"Item {itemData.itemName} adicionado ao inventário.");
+
+        if (InventoryUIManager.Instance != null)
+        {
+            InventoryUIManager.Instance.AddItem(newItem);
+        }
+    }
+
+    public bool HasItem(ItemData itemData)
+    {
+        return items.Exists(item => item.itemData == itemData);
+    }
+
+    public bool HasItem(ItemType itemType)
+    {
+        return items.Exists(item => item.itemData.itemType == itemType);
+    }
+
+    public void RemoveItem(InventoryItem item)
+    {
+        if (item == null)
+            return;
+
+        if (items.Remove(item))
+        {
+            Debug.Log($"Item {item.itemData.itemName} removido do inventário.");
+        }
+    }
+
+    public List<InventoryItem> GetItems()
+    {
+        return items;
     }
 }

@@ -8,6 +8,7 @@ public class SafePuzzleUI : MonoBehaviour
     [Tooltip("Digite a combinação de 3 números do cofre.")]
     [Range(0, 999)]
     public int correctCombination = 123;
+    public GameObject safeUI;
 
     [Header("Números dos slots")]
     [SerializeField] private int number1 = 0;
@@ -164,6 +165,8 @@ public class SafePuzzleUI : MonoBehaviour
         if (playerCombination == correctCombination)
         {
             Debug.Log("COFRE ABERTO! Combinação correta: " + playerCombination);
+            this.gameObject.SetActive(false);
+            safeUI.SetActive(true);
         }
         else
         {

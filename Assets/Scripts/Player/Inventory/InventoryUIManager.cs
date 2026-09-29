@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class InventoryUIManager : MonoBehaviour
 {
@@ -15,12 +14,6 @@ public class InventoryUIManager : MonoBehaviour
     [Header("Prefab do Item")]
     public GameObject inventoryItemPrefab;
 
-    [Header("Sprites")]
-    public Sprite maskSprite;
-    public Sprite weaponSprite;
-    public Sprite itemSprite;
-    public Sprite randomSprite;
-
     private void Awake()
     {
         if (Instance == null)
@@ -29,9 +22,15 @@ public class InventoryUIManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void AddItem(ItemType itemType)
+    public void AddItem(InventoryItem item)
     {
-        InventorySlotUI targetSlot = FindAvailableSlot(itemType);
+        if (item == null || item.itemData == null)
+        {
+            Debug.LogWarning("Tentou adicionar um InventoryItem inválido à UI.");
+            return;
+        }
+
+        InventorySlotUI targetSlot = FindAvailableSlot(item);
 
         if (targetSlot == null)
         {
@@ -46,34 +45,45 @@ public class InventoryUIManager : MonoBehaviour
 
         InventoryItemUI itemUI = newItem.GetComponent<InventoryItemUI>();
 
-        itemUI.itemType = itemType;
+        itemUI.item = item;
         itemUI.currentSlot = targetSlot;
 
         targetSlot.SetItem(itemUI);
 
         newItem.transform.localPosition = Vector3.zero;
 
-        Image image = newItem.GetComponent<Image>();
+        UnityEngine.UI.Image image = newItem.GetComponent<UnityEngine.UI.Image>();
 
         if (image != null)
         {
-            image.sprite = GetSprite(itemType);
+            image.sprite = item.itemData.icon;
         }
     }
 
-    private InventorySlotUI FindAvailableSlot(ItemType itemType)
-{
-    // Máscara
-    if (itemType == ItemType.Mask)
+    private InventorySlotUI FindAvailableSlot(InventoryItem item)
     {
-        // Se o slot de máscara estiver livre,
-        // equipa automaticamente.
-        if (maskSlots.Count > 0 && !maskSlots[0].IsOccupied())
+        if (item.itemData.itemType == ItemType.Mask)
         {
-            return maskSlots[0];
+            // Primeiro tenta equipar automaticamente a máscara.
+            if (maskSlots.Count > 0 && !maskSlots[0].IsOccupied())
+            {
+                return maskSlots[0];
+            }
+
+            // Se já existe uma máscara equipada,
+            // coloca a nova máscara no inventário normal.
+            foreach (InventorySlotUI slot in normalSlots)
+            {
+                if (!slot.IsOccupied())
+                {
+                    return slot;
+                }
+            }
+
+            return null;
         }
 
-        // Se já estiver ocupado, coloca no inventário normal.
+        // Outros itens vão para o inventário normal.
         foreach (InventorySlotUI slot in normalSlots)
         {
             if (!slot.IsOccupied())
@@ -83,38 +93,5 @@ public class InventoryUIManager : MonoBehaviour
         }
 
         return null;
-    }
-
-    // Outros itens vão para os espaços normais
-    foreach (InventorySlotUI slot in normalSlots)
-    {
-        if (!slot.IsOccupied())
-        {
-            return slot;
-        }
-    }
-
-    return null;
-}
-
-    private Sprite GetSprite(ItemType itemType)
-    {
-        switch (itemType)
-        {
-            case ItemType.Mask:
-                return maskSprite;
-
-            case ItemType.Weapon:
-                return weaponSprite;
-
-            case ItemType.Item:
-                return itemSprite;
-
-            case ItemType.Random:
-                return randomSprite;
-
-            default:
-                return null;
-        }
     }
 }

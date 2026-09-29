@@ -24,13 +24,14 @@ public class InventorySlotUI : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        InventoryItemUI draggedItem = eventData.pointerDrag?.GetComponent<InventoryItemUI>();
+        InventoryItemUI draggedItem =
+            eventData.pointerDrag?.GetComponent<InventoryItemUI>();
 
         if (draggedItem == null)
             return;
 
-        // MaskSlot só aceita máscaras
-        if (isMaskSlot && draggedItem.itemType != ItemType.Mask)
+        // Slot especial de máscara
+        if (isMaskSlot && draggedItem.ItemType != ItemType.Mask)
         {
             draggedItem.ReturnToOriginalSlot();
             return;
@@ -43,7 +44,7 @@ public class InventorySlotUI : MonoBehaviour, IDropHandler
             return;
         }
 
-        // Remove do slot antigo
+        // Remove do slot anterior
         if (draggedItem.currentSlot != null)
         {
             draggedItem.currentSlot.ClearSlot();
