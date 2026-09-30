@@ -387,6 +387,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 31001442}
   m_CullTransparentMesh: 1
+--- !u!4 &34296828 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3358533652420429718, guid: f7e5ad80114f5754eb5e34d0612b9187, type: 3}
+  m_PrefabInstance: {fileID: 766633838}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &47780644
 GameObject:
   m_ObjectHideFlags: 0
@@ -3118,7 +3123,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &337548049
 Transform:
   m_ObjectHideFlags: 0
@@ -3153,6 +3158,7 @@ MonoBehaviour:
   inimigo: {fileID: 1452891581}
   tempoAtivoInimigo: 10
   tempoForaDoFOV: 5
+  lookAt: {fileID: 0}
 --- !u!136 &337548051
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -6121,7 +6127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &561312409
 Transform:
   m_ObjectHideFlags: 0
@@ -6156,6 +6162,7 @@ MonoBehaviour:
   inimigo: {fileID: 424245825}
   tempoAtivoInimigo: 10
   tempoForaDoFOV: 5
+  lookAt: {fileID: 0}
 --- !u!136 &561312411
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -6909,7 +6916,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 377195376972245200, guid: 86f4c3061735b2d4c99f5bcf4d595d55, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1428826629898495765, guid: 86f4c3061735b2d4c99f5bcf4d595d55, type: 3}
       propertyPath: m_LocalScale.x
@@ -6929,7 +6936,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1428826629898495765, guid: 86f4c3061735b2d4c99f5bcf4d595d55, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.53
+      value: 4.77
       objectReference: {fileID: 0}
     - target: {fileID: 1428826629898495765, guid: 86f4c3061735b2d4c99f5bcf4d595d55, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7698,6 +7705,75 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3857411193833628257, guid: 5ac922be69da96d4d9991c11324d1a4b, type: 3}
+--- !u!1001 &766633838
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 979302804}
+    m_Modifications:
+    - target: {fileID: 3358533652420429718, guid: f7e5ad80114f5754eb5e34d0612b9187, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358533652420429718, guid: f7e5ad80114f5754eb5e34d0612b9187, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358533652420429718, guid: f7e5ad80114f5754eb5e34d0612b9187, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358533652420429718, guid: f7e5ad80114f5754eb5e34d0612b9187, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358533652420429718, guid: f7e5ad80114f5754eb5e34d0612b9187, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358533652420429718, guid: f7e5ad80114f5754eb5e34d0612b9187, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358533652420429718, guid: f7e5ad80114f5754eb5e34d0612b9187, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358533652420429718, guid: f7e5ad80114f5754eb5e34d0612b9187, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358533652420429718, guid: f7e5ad80114f5754eb5e34d0612b9187, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358533652420429718, guid: f7e5ad80114f5754eb5e34d0612b9187, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358533652420429718, guid: f7e5ad80114f5754eb5e34d0612b9187, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358533652420429718, guid: f7e5ad80114f5754eb5e34d0612b9187, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358533652420429718, guid: f7e5ad80114f5754eb5e34d0612b9187, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4189870790238402576, guid: f7e5ad80114f5754eb5e34d0612b9187, type: 3}
+      propertyPath: m_Name
+      value: Modelo_Teste
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f7e5ad80114f5754eb5e34d0612b9187, type: 3}
 --- !u!1 &773554779
 GameObject:
   m_ObjectHideFlags: 0
@@ -9281,7 +9357,8 @@ Transform:
   m_LocalPosition: {x: -33.09, y: 0, z: 53.96}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 34296828}
   m_Father: {fileID: 1766960187}
   m_LocalEulerAnglesHint: {x: 0, y: 175.874, z: 0}
 --- !u!208 &979302805
@@ -9319,6 +9396,7 @@ MonoBehaviour:
   inimigo: {fileID: 1221240840}
   tempoAtivoInimigo: 10
   tempoForaDoFOV: 5
+  lookAt: {fileID: 1376626689}
 --- !u!136 &979302807
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -9349,7 +9427,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 979302803}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -11527,7 +11605,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1168160363
 Transform:
   m_ObjectHideFlags: 0
@@ -11562,6 +11640,7 @@ MonoBehaviour:
   inimigo: {fileID: 1857300272}
   tempoAtivoInimigo: 10
   tempoForaDoFOV: 5
+  lookAt: {fileID: 0}
 --- !u!136 &1168160365
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -12395,7 +12474,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1257966604
 Transform:
   m_ObjectHideFlags: 0
@@ -12430,6 +12509,7 @@ MonoBehaviour:
   inimigo: {fileID: 1237375998}
   tempoAtivoInimigo: 10
   tempoForaDoFOV: 5
+  lookAt: {fileID: 0}
 --- !u!136 &1257966606
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -13884,6 +13964,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12f3fb3ba313d6946af3af64199b96c8, type: 3}
+--- !u!4 &1376626689 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1754559158150383491, guid: f7e5ad80114f5754eb5e34d0612b9187, type: 3}
+  m_PrefabInstance: {fileID: 766633838}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1378294347
 GameObject:
   m_ObjectHideFlags: 0
@@ -16018,7 +16103,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1553194559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16038,6 +16123,7 @@ MonoBehaviour:
   inimigo: {fileID: 1191184966}
   tempoAtivoInimigo: 10
   tempoForaDoFOV: 5
+  lookAt: {fileID: 0}
 --- !u!136 &1553194560
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -19648,7 +19734,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1863010957
 Transform:
   m_ObjectHideFlags: 0
@@ -19683,6 +19769,7 @@ MonoBehaviour:
   inimigo: {fileID: 1601119999}
   tempoAtivoInimigo: 10
   tempoForaDoFOV: 5
+  lookAt: {fileID: 0}
 --- !u!136 &1863010959
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -20786,7 +20873,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2034785074
 Transform:
   m_ObjectHideFlags: 0
@@ -20837,6 +20924,7 @@ MonoBehaviour:
   inimigo: {fileID: 446542589}
   tempoAtivoInimigo: 10
   tempoForaDoFOV: 5
+  lookAt: {fileID: 0}
 --- !u!136 &2034785077
 CapsuleCollider:
   m_ObjectHideFlags: 0
