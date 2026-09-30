@@ -13,6 +13,7 @@ TagManager:
   - Mulher
   - "Alian\xE7a"
   - NPC
+  - Enemy
   layers:
   - Default
   - TransparentFX
