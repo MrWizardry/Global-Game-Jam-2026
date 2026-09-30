@@ -22,12 +22,17 @@ public class InventoryUIManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void AddItem(InventoryItem item)
+    public bool CanAddItem(InventoryItem item)
+    {
+        return FindAvailableSlot(item) != null;
+    }
+
+    public InventoryItemUI AddItem(InventoryItem item)
     {
         if (item == null || item.itemData == null)
         {
             Debug.LogWarning("Tentou adicionar um InventoryItem inválido à UI.");
-            return;
+            return null;
         }
 
         InventorySlotUI targetSlot = FindAvailableSlot(item);
@@ -35,7 +40,7 @@ public class InventoryUIManager : MonoBehaviour
         if (targetSlot == null)
         {
             Debug.Log("Não existe espaço disponível para esse item.");
-            return;
+            return null;
         }
 
         GameObject newItem = Instantiate(
@@ -47,16 +52,48 @@ public class InventoryUIManager : MonoBehaviour
 
         itemUI.item = item;
         itemUI.currentSlot = targetSlot;
+        itemUI.isFromSafe = false;
 
         targetSlot.SetItem(itemUI);
 
         newItem.transform.localPosition = Vector3.zero;
 
-        UnityEngine.UI.Image image = newItem.GetComponent<UnityEngine.UI.Image>();
+        UnityEngine.UI.Image image =
+            newItem.GetComponent<UnityEngine.UI.Image>();
 
         if (image != null)
         {
             image.sprite = item.itemData.icon;
+        }
+
+        return itemUI;
+    }
+
+    public void RemoveItem(InventoryItem item)
+    {
+        if (item == null)
+            return;
+
+        foreach (InventorySlotUI slot in normalSlots)
+        {
+            if (slot.currentItem != null &&
+                slot.currentItem.item == item)
+            {
+                Destroy(slot.currentItem.gameObject);
+                slot.ClearSlot();
+                return;
+            }
+        }
+
+        foreach (InventorySlotUI slot in maskSlots)
+        {
+            if (slot.currentItem != null &&
+                slot.currentItem.item == item)
+            {
+                Destroy(slot.currentItem.gameObject);
+                slot.ClearSlot();
+                return;
+            }
         }
     }
 
@@ -64,14 +101,11 @@ public class InventoryUIManager : MonoBehaviour
     {
         if (item.itemData.itemType == ItemType.Mask)
         {
-            // Primeiro tenta equipar automaticamente a máscara.
             if (maskSlots.Count > 0 && !maskSlots[0].IsOccupied())
             {
                 return maskSlots[0];
             }
 
-            // Se já existe uma máscara equipada,
-            // coloca a nova máscara no inventário normal.
             foreach (InventorySlotUI slot in normalSlots)
             {
                 if (!slot.IsOccupied())
@@ -83,7 +117,6 @@ public class InventoryUIManager : MonoBehaviour
             return null;
         }
 
-        // Outros itens vão para o inventário normal.
         foreach (InventorySlotUI slot in normalSlots)
         {
             if (!slot.IsOccupied())

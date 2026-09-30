@@ -34,6 +34,7 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
+    // Usado quando o jogador coleta um item do mundo.
     public void AddItem(ItemData itemData)
     {
         if (itemData == null)
@@ -44,14 +45,34 @@ public class InventorySystem : MonoBehaviour
 
         InventoryItem newItem = new InventoryItem(itemData);
 
-        items.Add(newItem);
-
-        Debug.Log($"Item {itemData.itemName} adicionado ao inventário.");
-
-        if (InventoryUIManager.Instance != null)
+        if (!TryAddItem(newItem))
         {
-            InventoryUIManager.Instance.AddItem(newItem);
+            Debug.Log("Não foi possível adicionar o item ao inventário.");
         }
+    }
+
+    // Usado para transferências.
+    public bool TryAddItem(InventoryItem item)
+    {
+        if (item == null || item.itemData == null)
+            return false;
+
+        if (InventoryUIManager.Instance == null)
+            return false;
+
+        if (!InventoryUIManager.Instance.CanAddItem(item))
+        {
+            Debug.Log("Não existe espaço disponível no inventário.");
+            return false;
+        }
+
+        items.Add(item);
+
+        InventoryUIManager.Instance.AddItem(item);
+
+        Debug.Log($"Item {item.itemData.itemName} adicionado ao inventário.");
+
+        return true;
     }
 
     public bool HasItem(ItemData itemData)
@@ -72,6 +93,11 @@ public class InventorySystem : MonoBehaviour
         if (items.Remove(item))
         {
             Debug.Log($"Item {item.itemData.itemName} removido do inventário.");
+
+            if (InventoryUIManager.Instance != null)
+            {
+                InventoryUIManager.Instance.RemoveItem(item);
+            }
         }
     }
 

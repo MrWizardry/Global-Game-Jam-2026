@@ -4,11 +4,15 @@ using UnityEngine.EventSystems;
 public class InventoryItemUI : MonoBehaviour,
     IBeginDragHandler,
     IDragHandler,
-    IEndDragHandler
+    IEndDragHandler,
+    IPointerClickHandler
 {
     public InventoryItem item;
 
     public InventorySlotUI currentSlot;
+
+    [HideInInspector]
+    public bool isFromSafe;
 
     private Transform originalParent;
     private Vector3 originalPosition;
@@ -35,6 +39,15 @@ public class InventoryItemUI : MonoBehaviour,
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
     }
+
+    public void OnPointerClick(PointerEventData eventData)
+{
+    if (SafeInventoryUI.Instance != null &&
+        SafeInventoryUI.Instance.IsOpen())
+    {
+        SafeInventoryUI.Instance.TransferItem(this);
+    }
+}
 
     public void OnBeginDrag(PointerEventData eventData)
     {

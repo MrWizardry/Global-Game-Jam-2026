@@ -8,7 +8,7 @@ public class SafePuzzleUI : MonoBehaviour
     [Tooltip("Digite a combinação de 3 números do cofre.")]
     [Range(0, 999)]
     public int correctCombination = 123;
-    public GameObject safeUI;
+    [SerializeField] private SafeInventoryUI safeUI;
 
     [Header("Números dos slots")]
     [SerializeField] private int number1 = 0;
@@ -38,6 +38,7 @@ public class SafePuzzleUI : MonoBehaviour
 
     private void Start()
     {
+        gameObject.SetActive(false);
         // Atualiza os números na interface
         UpdateUI();
 
@@ -161,16 +162,32 @@ public class SafePuzzleUI : MonoBehaviour
             (number2 * 10) +
             number3;
 
-
         if (playerCombination == correctCombination)
         {
-            Debug.Log("COFRE ABERTO! Combinação correta: " + playerCombination);
+            Debug.Log(
+                "COFRE ABERTO! Combinação correta: " +
+                playerCombination
+            );
+
             this.gameObject.SetActive(false);
-            safeUI.SetActive(true);
+
+            if (safeUI != null)
+            {
+                safeUI.Open();
+            }
+            else
+            {
+                Debug.LogError(
+                    "SafeInventoryUI não foi configurado no SafePuzzleUI!"
+                );
+            }
         }
         else
         {
-            Debug.Log("Combinação incorreta! Jogador colocou: " + playerCombination);
+            Debug.Log(
+                "Combinação incorreta! Jogador colocou: " +
+                playerCombination
+            );
         }
     }
 }
